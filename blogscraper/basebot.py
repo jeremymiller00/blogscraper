@@ -15,18 +15,18 @@ import blogscraper.config as config
 class BaseBot:
     def __init__(self, blog_name):
         self.blog_name = blog_name
-        self.vault_path = config.vault_path
-        self.scraped_path = config.scraped_path
+        self.vault_path = config.VAULT_PATH
+        self.scraped_db = config.SCRAPED_DB
         self.link_list = None
         self.scraped = None
 
     def read_scraped(self):
-        with open(self.scraped_path, 'r') as f:
+        with open(self.scraped_db, 'r') as f:
             self.scraped = json.load(f)
         logging.info("Loaded scraped data file")
 
     def write_scraped(self):
-        with open(self.scraped_path, 'w') as f:
+        with open(self.scraped_db, 'w') as f:
             json.dump(self.scraped, f)
         logging.info("Wrote scraped data file")
 

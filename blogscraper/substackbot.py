@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import logging
 
-from .basebot import BaseBot
+from .BaseBot import BaseBot
 import blogscraper.config as config
 
 # Example for a specific blog bot
