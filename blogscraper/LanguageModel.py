@@ -44,8 +44,7 @@ class LanguageModel():
             logging.error("Error: Failed to generate response.")
             return None
 
-    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0, max_tokens=1000):
-    
+    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0, max_tokens=1000):    
         messages = [
         # {'role':'system', 
         #  'content': config.OPENAI_SYSTEM_MESSAGE},    
@@ -59,32 +58,12 @@ class LanguageModel():
             temperature=temperature, 
             max_tokens=max_tokens
         )
-        # print(completion.choices[0].text)
-        # print(dict(completion).get('usage'))
-        # print(completion.model_dump_json(indent=2))
-        
-        # response = openai.ChatCompletion.create(
-        #     model=model,
-        #     messages=messages,
-        #     temperature=temperature, 
-        #     max_tokens=max_tokens,
-        # )
 
         content = completion.choices[0].message
         usage = dict(completion).get('usage')
 
         return content, usage
 
-
-    # def generate_gpt35(self, query:str, model:str="jurassic_2_light") -> str:
-    #     # keeping it small for testing purposes
-    #     params = {"q": query, "max_tokens":10, "num_results":1}
-    #     response = requests.post(config.ai21_url + model, params=params)
-    #     if response.status_code == 200:
-    #         return json.loads(response.content)
-    #     else:
-    #         logging.error("Error: Failed to generate response.")
-    #         return None
 
     def get_model(self):
         pass
