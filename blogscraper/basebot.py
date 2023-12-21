@@ -1,15 +1,18 @@
-import requests
 import json
-from markdownify import markdownify as md
-from bs4 import BeautifulSoup
 from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
+
+from markdownify import markdownify as md
+import requests
+from bs4 import BeautifulSoup
 
 import blogscraper.config as config
 
 
 class BaseBot():
+    """_summary_
+    """
     def __init__(self, blog_name):
         self.blog_name = blog_name
         self.vault_path = config.VAULT_PATH
@@ -18,12 +21,12 @@ class BaseBot():
         self.scraped = None
 
     def read_scraped(self):
-        with open(self.scraped_db, 'r') as f:
+        with open(self.scraped_db, 'r', encoding="utf-8") as f:
             self.scraped = json.load(f)
         logging.info("Loaded scraped data file")
 
     def write_scraped(self):
-        with open(self.scraped_db, 'w') as f:
+        with open(self.scraped_db, 'w', encoding="utf-8") as f:
             json.dump(self.scraped, f)
         logging.info("Wrote scraped data file")
 
@@ -40,7 +43,7 @@ class BaseBot():
             if page not in self.scraped.keys():
                 self.scrape_page(page)
                 self.update_scraped_status(page)
-                logging.info(f"Scraped page: {page}")
+                logging.info("Scraped page: %s", page)
         return
 
     def send_email_notification(self):

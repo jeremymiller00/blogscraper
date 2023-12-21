@@ -1,15 +1,17 @@
 import os
-from openai import OpenAI
-import requests
 import json
-from bs4 import BeautifulSoup
 from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
 
+import requests
+import tiktoken
+from openai import OpenAI
+
+from bs4 import BeautifulSoup
+
 import blogscraper.config as config
 
-# openai.api_key  = os.environ['OPENAI_API_KEY']
 client = OpenAI()
 
 class LanguageModel():
@@ -17,7 +19,7 @@ class LanguageModel():
     Represents a language model that can be used for many purposes
     Initial use case is to clean up text from scraped blog
     """
-    def __init__(self, model:str="mistral"):
+    def __init__(self, model:str="gpt-3.5-turbo-1106"):
         self.model = model
         # self.url = config
 
@@ -37,20 +39,20 @@ class LanguageModel():
             "prompt": query,
             "stream": False
         }
-        response = requests.post(config.LOCAL_LLM_URL, json=body)
+        response = requests.post(config.LOCAL_LLM_URL, json=body, timeout=500)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
             logging.error("Error: Failed to generate response.")
             return None
 
-    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0):    
+    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0):  
         messages = [
         # {'role':'system', 
         #  'content': config.OPENAI_SYSTEM_MESSAGE},    
         {'role':'user',
          'content': query},  
-        ] 
+        ]
 
         completion = client.chat.completions.create(
             model=model,
@@ -64,10 +66,53 @@ class LanguageModel():
 
         return content, usage
 
+    def clean_blog(self, text):
+        result = ""
+        usages = []
+        for t in self.prepare_text(text):
+            prompt = f"""
+            You are a text cleaning agent. \
+            You receive text delimited by triple dashes which has been scraped from a website which contains a blog post. \
+            The text will inevitably be dirty. \
+            Your job is return a cleaned version of the text which contains only the content of the article. \
+            Remove any metadata or artifacts of scaping the blog website.\
+            Do not summarize the article, but return it in it's entirity. \
+
+            ---{t}---
+            """
+            content, usage = self.generate(prompt)
+            result += content.content
+            usages.append(usage)
+
+        return result, usages
+
+    def prepare_text(self, text, window=6000):
+        enc = tiktoken.encoding_for_model("gpt-3.5-turbo-1106")
+        tokens = enc.encode(text)
+        n_tokens = len(tokens)
+
+        # if short enough, return text as only element of a list
+        if n_tokens < window:
+            logging.info("Text not chunked")
+            return [text]
+
+        chunks = (n_tokens // window) + 1
+        size = len(text) // chunks
+        result = []
+        # get the first chunk
+        result.append(text[:size])
+        # get middle chunks
+        for i in range(1, chunks - 1):
+            result.append(text[size*i:size*(i+1)])
+        # get last chunk
+        result.append(text[size*(chunks-1):])
+        logging.info("Text broken into %s chunks", chunks)
+
+        return result
+
 
     def get_model(self):
         pass
 
     def set_model(self, model:str):
         pass
-
