@@ -1,10 +1,7 @@
 import requests
 import json
-import smtplib
-import ssl
 from markdownify import markdownify as md
 from bs4 import BeautifulSoup
-from email.mime.text import MIMEText
 from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
@@ -12,7 +9,7 @@ from logging.handlers import RotatingFileHandler
 import blogscraper.config as config
 
 
-class BaseBot:
+class BaseBot():
     def __init__(self, blog_name):
         self.blog_name = blog_name
         self.vault_path = config.VAULT_PATH

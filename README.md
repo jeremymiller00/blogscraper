@@ -9,3 +9,11 @@ https://docs.python-guide.org/writing/structure/
 * Clean up scraped text from substack blogs (llm?)
 * Build connections to local llm and gpt
 * Move on to other blogs
+* Eugene Yan
+* Chip Huyen
+* Lenny's Podcast
+* Stay Sassy
+
+## Utils
+* Language model stuff
+* Logging stuff

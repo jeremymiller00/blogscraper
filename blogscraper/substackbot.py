@@ -8,10 +8,10 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import logging
 
-from .BaseBot import BaseBot
 import blogscraper.config as config
+from .BaseBot import BaseBot
 
-# Example for a specific blog bot
+
 class SubstackBot(BaseBot):
 
     def get_blog_pages(self):
