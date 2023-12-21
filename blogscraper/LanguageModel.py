@@ -24,7 +24,7 @@ class LanguageModel():
     def generate(self, query:str):
         if self.model in ["llama2", "mistral"]:
             return self.generate_local(query=query, model=self.model)
-        elif self.model in ["gpt-3.5-turbo"]:
+        elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106"]:
             return self.generate_gpt(query=query, model=self.model)
         else:
             raise ValueError(f"Invalid model: only valid values are {config.VALID_MODELS}")
@@ -44,7 +44,7 @@ class LanguageModel():
             logging.error("Error: Failed to generate response.")
             return None
 
-    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0, max_tokens=1000):    
+    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0):    
         messages = [
         # {'role':'system', 
         #  'content': config.OPENAI_SYSTEM_MESSAGE},    
@@ -55,8 +55,8 @@ class LanguageModel():
         completion = client.chat.completions.create(
             model=model,
             messages=messages,
-            temperature=temperature, 
-            max_tokens=max_tokens
+            temperature=temperature
+            # max_tokens=max_tokens
         )
 
         content = completion.choices[0].message
