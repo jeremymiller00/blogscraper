@@ -13,6 +13,7 @@ https://docs.python-guide.org/writing/structure/
 * Chip Huyen
 * Lenny's Podcast
 * Stay Sassy
+* Lilian Weng
 
 ## Utils
 * Language model stuff

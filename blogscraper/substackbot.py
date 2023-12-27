@@ -13,16 +13,19 @@ from .LanguageModel import LanguageModel
 
 
 class SubstackBot(BaseBot):
-    """_summary_
+    """
+    Substack child class for a bot to scrape the content from a Substack blog
 
     Args:
         BaseBot (_type_): _description_
     """
 
     def get_blog_pages(self):
-        # Code to retrieve the list of pages from the blog's start page
-        # In substack pages, links to archive posts are the only links listed twice
-        # This can be a simple way to get them
+        """
+        Code to retrieve the list of pages from the blog's start page
+        In Substack pages, links to archive posts are the only links listed twice
+        This can be a simple way to get them
+        """
         pages = requests.get(config.BLOGS.get(self.blog_name), timeout=100)
         soup = BeautifulSoup(pages.content, 'html.parser')
         link_list = [link.get('href') for link in soup.find_all('a')]
@@ -33,8 +36,13 @@ class SubstackBot(BaseBot):
         logging.info("Retrieved page list for: %s", self.blog_name)
 
 
-    def scrape_page(self, page_url):
-        # Code to scrape content from a given page
+    def scrape_page(self, page_url:str):
+        """
+        Scrape content from a given page
+
+        Args:
+            page_url (str): url of an individual blog post
+        """
         def is_main(tag):
             return tag.attrs.get('id') == 'main'
 

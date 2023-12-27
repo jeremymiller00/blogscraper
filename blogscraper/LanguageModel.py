@@ -24,6 +24,17 @@ class LanguageModel():
         # self.url = config
 
     def generate(self, query:str):
+        """_summary_
+
+        Args:
+            query (str): _description_
+
+        Raises:
+            ValueError: _description_
+
+        Returns:
+            _type_: _description_
+        """
         if self.model in ["llama2", "mistral"]:
             return self.generate_local(query=query, model=self.model)
         elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106"]:
@@ -46,7 +57,17 @@ class LanguageModel():
             logging.error("Error: Failed to generate response.")
             return None
 
-    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0):  
+    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0):
+        """_summary_
+
+        Args:
+            query (_type_): _description_
+            model (str, optional): _description_. Defaults to "gpt-3.5-turbo".
+            temperature (int, optional): _description_. Defaults to 0.
+
+        Returns:
+            _type_: _description_
+        """
         messages = [
         # {'role':'system', 
         #  'content': config.OPENAI_SYSTEM_MESSAGE},    
@@ -66,7 +87,7 @@ class LanguageModel():
 
         return content, usage
 
-    def clean_blog(self, text):
+    def clean_blog(self, text:str) -> (str, list):
         result = ""
         usages = []
         for t in self.prepare_text(text):
@@ -86,7 +107,16 @@ class LanguageModel():
 
         return result, usages
 
-    def prepare_text(self, text, window=6000):
+    def prepare_text(self, text:str, window:int=6000) -> list:
+        """_summary_
+
+        Args:
+            text (str): _description_
+            window (int, optional): _description_. Defaults to 6000.
+
+        Returns:
+            list: _description_
+        """
         enc = tiktoken.encoding_for_model("gpt-3.5-turbo-1106")
         tokens = enc.encode(text)
         n_tokens = len(tokens)
@@ -112,7 +142,18 @@ class LanguageModel():
 
 
     def get_model(self):
-        pass
+        """_summary_
+
+        Returns:
+            _type_: _description_
+        """
+        return self.model
 
     def set_model(self, model:str):
-        pass
+        error_string = """
+        Invalid model name specified.\
+        The only valid model names are %s"""
+        if model in config.VALID_MODELS:
+            self.model = model
+        else:
+            raise ValueError(error_string, str(config.VALID_MODELS))
