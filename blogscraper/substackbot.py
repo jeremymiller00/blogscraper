@@ -31,6 +31,7 @@ class SubstackBot(BaseBot):
         link_list = [link.get('href') for link in soup.find_all('a')]
         c = Counter()
         c.update(link_list)
+        # in Substack, all links to articles are listed exactly twice on the page
         link_list_filtered = [k for k, v in c.items() if v == 2]
         self.link_list = link_list_filtered
         logging.info("Retrieved page list for: %s", self.blog_name)

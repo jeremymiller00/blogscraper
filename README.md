@@ -6,8 +6,8 @@ Keeping my personal knowledge library up to date automagically
 https://docs.python-guide.org/writing/structure/
 
 ## ToDo
-* Clean up scraped text from substack blogs (llm?)
-* Build connections to local llm and gpt
+* store usages, build out data structure
+* make ui module
 * Move on to other blogs
 * Eugene Yan
 * Chip Huyen
@@ -18,3 +18,14 @@ https://docs.python-guide.org/writing/structure/
 ## Utils
 * Language model stuff
 * Logging stuff
+
+
+### _sample mermaid chart_
+```mermaid
+flowchart LR
+
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+```

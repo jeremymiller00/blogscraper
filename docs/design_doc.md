@@ -18,7 +18,6 @@ Connectors for
 ## Once the base page is identified (article archive), all work is automated to
 * Scrape the article (probably want to do at midnight or something)
 * Create the md file in the vault
-* Send me an email telling me it was done, and reminding me to gitupdate the vault (can I automate the triggering of this script?)
 * Smart Connections plugin will then automatically index and store vectors
 
 ## Provide abstractions for:
@@ -36,7 +35,6 @@ Online PDF?
 * A database (file? sqlite?) is needed to track what has been scraped
  * Just a json file for now
 * Get list of pages, filter, then scrape
-* Or go by last scraping date, get since then
 
 # Objects
 ## BaseBot

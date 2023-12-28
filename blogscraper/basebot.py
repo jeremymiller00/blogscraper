@@ -7,7 +7,8 @@ from markdownify import markdownify as md
 import requests
 from bs4 import BeautifulSoup
 
-import blogscraper.config as config
+# import blogscraper.config as config
+from blogscraper import config
 
 
 class BaseBot():
@@ -49,7 +50,7 @@ class BaseBot():
         """
         raise NotImplementedError("Base class BaseBot does not implement.")
 
-    def scrape_pages(self, debug:bool=False, debug_n_articles:int=3):
+    def scrape_pages(self, debug:bool=False, debug_n_articles:int=1):
         """
         Scrapes pages not found in database_path for a given blog
         """
