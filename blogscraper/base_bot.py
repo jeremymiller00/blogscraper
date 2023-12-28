@@ -3,11 +3,10 @@ from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
 
-from markdownify import markdownify as md
-import requests
-from bs4 import BeautifulSoup
+# from markdownify import markdownify as md
+# import requests
+# from bs4 import BeautifulSoup
 
-# import blogscraper.config as config
 from blogscraper import config
 
 

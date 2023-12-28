@@ -1,5 +1,5 @@
-import json
-from datetime import datetime
+# import json
+# from datetime import datetime
 import logging
 from collections import Counter
 
@@ -7,9 +7,9 @@ import requests
 from markdownify import markdownify as md
 from bs4 import BeautifulSoup
 
-import blogscraper.config as config
-from .BaseBot import BaseBot
-from .LanguageModel import LanguageModel
+from blogscraper import config
+from .base_bot import BaseBot
+from .language_model import LanguageModel
 
 
 class SubstackBot(BaseBot):
