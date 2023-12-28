@@ -16,7 +16,7 @@ BLOGS = {
 
 # local file stuff
 VAULT_PATH = "/Users/Jeremy/testvault/"
-SCRAPED_DB = "/Users/Jeremy/Documents/Data_Science/Projects/blogscraper/blogscraper/scraped.json"
+DB_PATH = "/Users/Jeremy/Documents/Data_Science/Projects/blogscraper/blogscraper/database.json"
 
 
 # llm stuff

@@ -19,24 +19,24 @@ class BaseBot():
     def __init__(self, blog_name):
         self.blog_name = blog_name
         self.vault_path = config.VAULT_PATH
-        self.scraped_db = config.SCRAPED_DB
+        self.database_path = config.DB_PATH
         self.link_list = None
-        self.scraped = None
+        self.database = None
 
-    def read_database(self):
+    def read_database_path(self):
         """
-        Reads json file to in-memory database
+        Reads json file to in-memory database_path
         """
-        with open(self.scraped_db, 'r', encoding="utf-8") as f:
-            self.scraped = json.load(f)
+        with open(self.database_path, 'r', encoding="utf-8") as f:
+            self.database = json.load(f)
         logging.info("Loaded scraped data file")
 
-    def write_database(self):
+    def write_database_path(self):
         """
-        Writes in-memory database to json file
+        Writes in-memory database_path to json file
         """
-        with open(self.scraped_db, 'w', encoding="utf-8") as f:
-            json.dump(self.scraped, f)
+        with open(self.database_path, 'w', encoding="utf-8") as f:
+            json.dump(self.database, f)
         logging.info("Wrote scraped data file")
 
     def get_blog_pages(self):
@@ -49,14 +49,21 @@ class BaseBot():
         """
         raise NotImplementedError("Base class BaseBot does not implement.")
 
-    def scrape_pages(self):
+    def scrape_pages(self, debug:bool=False, debug_n_articles:int=3):
         """
-        Scrapes pages not found in database for a given blog
+        Scrapes pages not found in database_path for a given blog
         """
-        for page in self.link_list and page not in self.scraped.keys():
-            self.scrape_page(page)
-            self.update_scraped_status(page)
-            logging.info("Scraped page: %s", page)
+        if debug:
+            count = 0
+        for page in self.link_list:
+            if page not in self.database.keys():
+                self.scrape_page(page)
+                self.update_scraped_status(page)
+                logging.info("Scraped page: %s", page)
+                if debug:
+                    count += 1
+                    if count >= debug_n_articles:
+                        return
 
     def scrape_page(self, page_url:str):
         """
@@ -73,16 +80,15 @@ class BaseBot():
 
     def update_scraped_status(self, page_url:str) -> None:
         """
-        Update the in-memory database with the scraped status
+        Update the in-memory database_path with the scraped status
 
         Args:
             page_url (str): _description_
         """
-        # Code to 
         now=datetime.now()
-        self.scraped[page_url] = now.isoformat()
+        self.database[page_url] = now.isoformat()
 
-    def run(self):
+    def run(self, debug:bool=False, debug_n_articles:int=1):
         """
         Run the scraping program
         """
@@ -92,7 +98,7 @@ class BaseBot():
             encoding='utf-8', 
             level=logging.INFO
         )
-        self.read_database()
+        self.read_database_path()
         self.get_blog_pages()
-        self.scrape_pages()
-        self.write_database()
+        self.scrape_pages(debug=debug, debug_n_articles=debug_n_articles)
+        self.write_database_path()
