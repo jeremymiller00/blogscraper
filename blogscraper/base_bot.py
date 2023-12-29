@@ -8,6 +8,7 @@ from logging.handlers import RotatingFileHandler
 # from bs4 import BeautifulSoup
 
 from blogscraper import config
+from .source import Article, Sourceh
 
 
 class BaseBot():
