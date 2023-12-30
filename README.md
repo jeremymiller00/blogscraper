@@ -2,6 +2,17 @@
 
 Keeping my personal knowledge library up to date automagically
 
+# to execute
+```sh
+python blogscraper/app.py scrape
+```
+## To get help
+```sh
+python blogscraper/app.py -h
+```
+
+
+
 ## Reference
 https://docs.python-guide.org/writing/structure/
 

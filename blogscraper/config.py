@@ -1,6 +1,16 @@
 """ 
 Config module for constants and config values
+
+04201978
+
 """
+UI_HELP_STRING = """\
+"Available Commands:\
+\tsources\tshow all sources\n\
+\tscrape\tscrape new articles\n\
+"""
+
+VALID_BOTS = ["substackbot"]
 
 # authors to follow
 BLOGS = {
@@ -8,14 +18,14 @@ BLOGS = {
         "base_url": "https://cutlefish.substack.com/archive", 
         "bot": "substackbot"
     },
-    "Katie Bauer": {
-        "base_url": "https://wrongbutuseful.substack.com/archive", 
-        "bot": "substackbot"
-    },
-    "Simon Willison": {
-        "base_url": "https://simonw.substack.com/archive", 
-        "bot": "substackbot"
-    }
+    # "Katie Bauer": {
+    #     "base_url": "https://wrongbutuseful.substack.com/archive", 
+    #     "bot": "substackbot"
+    # },
+    # "Simon Willison": {
+    #     "base_url": "https://simonw.substack.com/archive", 
+    #     "bot": "substackbot"
+    # }
 }
 # "Eugene Yan" : "https://eugeneyan.com/writing/"
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
