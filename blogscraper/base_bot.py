@@ -1,7 +1,7 @@
-import json
 from datetime import datetime
 import logging
 
+# import json
 # from markdownify import markdownify as md
 # import requests
 # from bs4 import BeautifulSoup
@@ -69,16 +69,6 @@ class BaseBot():
             NotImplementedError: _description_
         """
         raise NotImplementedError("Base class BaseBot does not implement.")
-
-    # def update_scraped_status(self, page_url: str) -> None:
-    #     """
-    #     Update the in-memory database with the scraped status
-
-    #     Args:
-    #         page_url (str): _description_
-    #     """
-    #     now = datetime.now()
-    #     self.database[page_url] = now.isoformat()
 
     def run(self):
         """

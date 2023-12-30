@@ -24,6 +24,8 @@ https://docs.python-guide.org/writing/structure/
 * Lenny's Podcast
 * Stay Sassy
 * Lilian Weng
+* add "processed X docs in Y seconds"
+* add verbose mode
 * store usages
 
 ## Maybe Later ToDo

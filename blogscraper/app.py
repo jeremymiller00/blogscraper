@@ -59,6 +59,7 @@ class UserInterface():
             return
         author = input("Author name: ")
         base_url = input("Base url: ")
+        # NEEDS COMPLETION
 
     def update_source(self):
         pass
@@ -82,7 +83,7 @@ class UserInterface():
         parser = argparse.ArgumentParser(
             prog='Blog Scraper',
             description='Auto-get new articles for followed authors.',
-            epilog='Text help at the bottom.')
+            epilog=config.UI_HELP_STRING)
         parser.add_argument('-d', '--debug',
                             action='store_true',
                             help="run in debug mode")
@@ -99,8 +100,11 @@ class UserInterface():
         if self.args.command == "sources":
             self.get_sources()
         elif self.args.command == "scrape":
+            print("Reading database")
             self.read_database()
+            print("Scraping new articles...")
             self.get_new_articles()
+            print("Writing database")
             self.write_database()
 
 
