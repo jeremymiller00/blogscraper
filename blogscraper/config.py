@@ -4,9 +4,18 @@ Config module for constants and config values
 
 # authors to follow
 BLOGS = {
-    "John Cutler" : "https://cutlefish.substack.com/archive",
-    "Katie Bauer" : "https://wrongbutuseful.substack.com/archive",
-    "Simon Willison" : "https://simonw.substack.com/archive"
+    "John Cutler": {
+        "base_url": "https://cutlefish.substack.com/archive", 
+        "bot": "substackbot"
+    },
+    "Katie Bauer": {
+        "base_url": "https://wrongbutuseful.substack.com/archive", 
+        "bot": "substackbot"
+    },
+    "Simon Willison": {
+        "base_url": "https://simonw.substack.com/archive", 
+        "bot": "substackbot"
+    }
 }
 # "Eugene Yan" : "https://eugeneyan.com/writing/"
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
@@ -15,7 +24,8 @@ BLOGS = {
 
 
 # local file stuff
-VAULT_PATH = "/Users/Jeremy/testvault/"
+VAULT_PATH = "/Users/Jeremy/Data-Science-Vault/DS-Library/Articles/new/"
+DEBUG_VAULT_PATH = "/Users/Jeremy/testvault/"
 DB_PATH = "/Users/Jeremy/Documents/Data_Science/Projects/blogscraper/blogscraper/database.json"
 
 

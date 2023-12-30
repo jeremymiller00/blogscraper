@@ -6,7 +6,6 @@ Keeping my personal knowledge library up to date automagically
 https://docs.python-guide.org/writing/structure/
 
 ## ToDo
-* store usages, build out data structure
 * make ui module
 * Move on to other blogs
 * Eugene Yan
@@ -14,6 +13,10 @@ https://docs.python-guide.org/writing/structure/
 * Lenny's Podcast
 * Stay Sassy
 * Lilian Weng
+* store usages
+
+## Maybe Later ToDo
+* Build out data structure
 
 ## Utils
 * Language model stuff

@@ -1,29 +1,29 @@
-import os
+# import os
+# from bs4 import BeautifulSoup
+# from datetime import datetime
+# from logging.handlers import RotatingFileHandler
+
 import json
-from datetime import datetime
 import logging
-from logging.handlers import RotatingFileHandler
 
 import requests
 import tiktoken
 from openai import OpenAI
 
-from bs4 import BeautifulSoup
-
-import blogscraper.config as config
+import config
 
 client = OpenAI()
+
 
 class LanguageModel():
     """
     Represents a language model that can be used for many purposes
     Initial use case is to clean up text from scraped blog
     """
-    def __init__(self, model:str="gpt-3.5-turbo-1106"):
+    def __init__(self, model: str = "gpt-3.5-turbo-1106"):
         self.model = model
-        # self.url = config
 
-    def generate(self, query:str):
+    def generate(self, query: str):
         """_summary_
 
         Args:
@@ -40,9 +40,10 @@ class LanguageModel():
         elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106"]:
             return self.generate_gpt(query=query, model=self.model)
         else:
-            raise ValueError(f"Invalid model: only valid values are {config.VALID_MODELS}")
+            raise ValueError(f"Invalid model: \
+                             only valid values are {config.VALID_MODELS}")
 
-    def generate_local(self, query:str, model:str) -> str:
+    def generate_local(self, query: str, model: str) -> str:
         if model not in ["llama2", "mistral"]:
             raise ValueError("Model must be one of 'llama2', 'mistral'")
         body = {
@@ -57,11 +58,14 @@ class LanguageModel():
             logging.error("Error: Failed to generate response.")
             return None
 
-    def generate_gpt(self, query, model="gpt-3.5-turbo", temperature=0):
+    def generate_gpt(self, 
+                     query: str,
+                     model: str = "gpt-3.5-turbo",
+                     temperature: int = 0):
         """_summary_
 
         Args:
-            query (_type_): _description_
+            query (str): _description_
             model (str, optional): _description_. Defaults to "gpt-3.5-turbo".
             temperature (int, optional): _description_. Defaults to 0.
 
@@ -69,35 +73,31 @@ class LanguageModel():
             _type_: _description_
         """
         messages = [
-        # {'role':'system', 
-        #  'content': config.OPENAI_SYSTEM_MESSAGE},    
-        {'role':'user',
-         'content': query},  
+            {'role': 'user',
+             'content': query}
         ]
-
         completion = client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=temperature
-            # max_tokens=max_tokens
         )
-
         content = completion.choices[0].message
         usage = dict(completion).get('usage')
-
         return content, usage
 
-    def clean_blog(self, text:str) -> (str, list):
+    def clean_blog(self, text: str) -> (str, list):
         result = ""
         usages = []
         for t in self.prepare_text(text):
             prompt = f"""
             You are a text cleaning agent. \
-            You receive text delimited by triple dashes which has been scraped from a website which contains a blog post. \
+            You receive text delimited by triple dashes \
+            which has been scraped from a website which contains a blog post. \
             The text will inevitably be dirty. \
-            Your job is return a cleaned version of the text which contains only the content of the article. \
+            Your job is return a cleaned version of the text \
+            which contains only the content of the article. \
             Remove any metadata or artifacts of scaping the blog website.\
-            Do not summarize the article, but return it in it's entirity. \
+            Do not summarize the article, but return it in it's entirety. \
 
             ---{t}---
             """
@@ -107,7 +107,7 @@ class LanguageModel():
 
         return result, usages
 
-    def prepare_text(self, text:str, window:int=6000) -> list:
+    def prepare_text(self, text: str, window: int = 6000) -> list:
         """_summary_
 
         Args:
@@ -140,7 +140,6 @@ class LanguageModel():
 
         return result
 
-
     def get_model(self):
         """_summary_
 
@@ -149,7 +148,7 @@ class LanguageModel():
         """
         return self.model
 
-    def set_model(self, model:str):
+    def set_model(self, model: str):
         error_string = """
         Invalid model name specified.\
         The only valid model names are %s"""

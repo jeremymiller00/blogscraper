@@ -7,9 +7,9 @@ import requests
 from markdownify import markdownify as md
 from bs4 import BeautifulSoup
 
-from blogscraper import config
-from .base_bot import BaseBot
-from .language_model import LanguageModel
+import config
+from base_bot import BaseBot
+from language_model import LanguageModel
 
 
 class SubstackBot(BaseBot):
@@ -23,21 +23,22 @@ class SubstackBot(BaseBot):
     def get_blog_pages(self):
         """
         Code to retrieve the list of pages from the blog's start page
-        In Substack pages, links to archive posts are the only links listed twice
+        In Substack, links to archive posts are the only links listed twice
         This can be a simple way to get them
         """
-        pages = requests.get(config.BLOGS.get(self.blog_name), timeout=100)
+        pages = requests.get(
+            config.BLOGS.get(self.blog_name).get("base_url"),
+            timeout=100)
         soup = BeautifulSoup(pages.content, 'html.parser')
         link_list = [link.get('href') for link in soup.find_all('a')]
         c = Counter()
         c.update(link_list)
-        # in Substack, all links to articles are listed exactly twice on the page
+        # all links to articles are listed exactly twice on the page
         link_list_filtered = [k for k, v in c.items() if v == 2]
         self.link_list = link_list_filtered
         logging.info("Retrieved page list for: %s", self.blog_name)
 
-
-    def scrape_page(self, page_url:str):
+    def scrape_page(self, page_url: str):
         """
         Scrape content from a given page
 
@@ -49,7 +50,7 @@ class SubstackBot(BaseBot):
 
         page = requests.get(page_url, timeout=100)
         soup = BeautifulSoup(page.content, 'html.parser')
-        text = md(str(soup.body.find_all(is_main))) # added .div
+        text = md(str(soup.body.find_all(is_main)))  # added .div
         logging.info("Retrieved text for: %s", page_url)
         lm = LanguageModel()
         cleaned_text, usages = lm.clean_blog(text)

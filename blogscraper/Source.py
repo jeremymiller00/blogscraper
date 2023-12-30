@@ -1,3 +1,7 @@
+""" 
+Holding off for now on developing this
+Simple dict of url:date seems to work fine
+"""
 from dataclasses import dataclass
 
 
