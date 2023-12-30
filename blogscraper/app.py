@@ -59,6 +59,8 @@ class UserInterface():
             return
         author = input("Author name: ")
         base_url = input("Base url: ")
+        sources = config.BLOGS
+        sources.update({author: {"base_url": base_url, "bot": bot}})
         # NEEDS COMPLETION
 
     def update_source(self):
@@ -75,8 +77,11 @@ class UserInterface():
                                   debug=self.args.debug)
                 scraped = bot.run()
                 self.database.update(scraped)
+            else:
+                raise ValueError("Invalid bot specification")
 
     def get_articles_for_source(self):
+        """get the articles for only a single source"""
         pass
 
     def get_args(self):
@@ -99,6 +104,9 @@ class UserInterface():
     def command(self):
         if self.args.command == "sources":
             self.get_sources()
+        elif self.args.command == "add":
+            self.add_source()
+            print("Source successfully added")
         elif self.args.command == "scrape":
             print("Reading database")
             self.read_database()
@@ -111,8 +119,8 @@ class UserInterface():
 ###############################################
 if __name__ == '__main__':
     ui = UserInterface()
-    ui.welcome()
     ui.get_args()
+    ui.welcome()
     if ui.args.debug:
         print("Debug mode engaged.\n")
     ui.command()
