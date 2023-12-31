@@ -52,6 +52,7 @@ class BaseBot():
         scraped = {}
         if self.debug:
             count = 0
+            self.database = {}  # reset to empty database for debugging
         for page in self.link_list:
             if page not in self.database.keys():
                 self.scrape_page(page)

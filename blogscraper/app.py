@@ -84,6 +84,8 @@ class UserInterface():
                                   debug=self.args.debug)
                 scraped = bot.get_and_scrape_pages()
                 self.database.update(scraped)
+                if self.args.debug:  # break out of loop after first writer
+                    return
             else:
                 logging.error("raised ValueError('Invalid bot specification')")
                 raise ValueError("Invalid bot specification")
