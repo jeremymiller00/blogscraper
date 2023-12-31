@@ -23,72 +23,21 @@ class LanguageModel():
     def __init__(self, model: str = "gpt-3.5-turbo-1106"):
         self.model = model
 
-    def generate(self, query: str):
-        """_summary_
-
-        Args:
-            query (str): _description_
-
-        Raises:
-            ValueError: _description_
-
-        Returns:
-            _type_: _description_
-        """
-        if self.model in ["llama2", "mistral"]:
-            return self.generate_local(query=query, model=self.model)
-        elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106"]:
-            return self.generate_gpt(query=query, model=self.model)
-        else:
-            raise ValueError(f"Invalid model: \
-                             only valid values are {config.VALID_MODELS}")
-
-    def generate_local(self, query: str, model: str) -> str:
-        if model not in ["llama2", "mistral"]:
-            raise ValueError("Model must be one of 'llama2', 'mistral'")
-        body = {
-            "model": model,
-            "prompt": query,
-            "stream": False
-        }
-        response = requests.post(config.LOCAL_LLM_URL, json=body, timeout=500)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            logging.error("Error: Failed to generate response.")
-            return None
-
-    def generate_gpt(self, 
-                     query: str,
-                     model: str = "gpt-3.5-turbo",
-                     temperature: int = 0):
-        """_summary_
-
-        Args:
-            query (str): _description_
-            model (str, optional): _description_. Defaults to "gpt-3.5-turbo".
-            temperature (int, optional): _description_. Defaults to 0.
-
-        Returns:
-            _type_: _description_
-        """
-        messages = [
-            {'role': 'user',
-             'content': query}
-        ]
-        completion = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=temperature
-        )
-        content = completion.choices[0].message
-        usage = dict(completion).get('usage')
-        return content, usage
-
     def clean_blog(self, text: str) -> (str, list):
+        """
+        Clean a given scraped text (blog post)
+        Possibly in chunks
+
+        Args:
+            text (str): text to be cleaned
+
+        Returns:
+            str: cleaned text
+            list(Usage): list of usage objects
+        """
         result = ""
         usages = []
-        for t in self.prepare_text(text):
+        for t in self.__chunk_text(text):
             prompt = f"""
             You are a text cleaning agent. \
             You receive text delimited by triple dashes \
@@ -107,15 +56,97 @@ class LanguageModel():
 
         return result, usages
 
-    def prepare_text(self, text: str, window: int = 6000) -> list:
-        """_summary_
+    def generate(self, query: str):
+        """
+        Generate response from language model
+        Consistent abstraction layer
 
         Args:
-            text (str): _description_
-            window (int, optional): _description_. Defaults to 6000.
+            query (str): input to language model
+
+        Raises:
+            ValueError: _description_
 
         Returns:
-            list: _description_
+            __call__: function call to specific language model
+        """
+        if self.model in ["llama2", "mistral"]:
+            return self.__generate_local(query=query, model=self.model)
+        elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106"]:
+            return self.__generate_gpt(query=query, model=self.model)
+        else:
+            raise ValueError(f"Invalid model: \
+                             only valid values are {config.VALID_MODELS}")
+
+    def __generate_local(self, query: str, model: str) -> str:
+        """
+        Generate response from language model
+        Should only be called by generate()
+
+        Args:
+            query (str): input to language model
+            model (str): model name
+
+        Raises:
+            ValueError: if invalid model name specified
+
+        Returns:
+            str: json from local model as dict
+            NEEDS FURTHER DEVELOPMENT TO BE FUNCTIONAL
+        """
+        if model not in ["llama2", "mistral"]:
+            raise ValueError("Model must be one of 'llama2', 'mistral'")
+        body = {
+            "model": model,
+            "prompt": query,
+            "stream": False
+        }
+        response = requests.post(config.LOCAL_LLM_URL, json=body, timeout=500)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            logging.error("Error: Failed to generate response.")
+            return None
+
+    def __generate_gpt(self,
+                       query: str,
+                       model: str = "gpt-3.5-turbo",
+                       temperature: int = 0):
+        """
+        Generate a response from GPT (3.5)
+        Should only be called by generate()
+
+        Args:
+            query (str): input to language model
+            model (str, optional): Model name. Defaults to "gpt-3.5-turbo".
+            temperature (int, optional): model 'creativity'. Defaults to 0.
+
+        Returns:
+            str, list(Usage): model response, list of usages (CURRENTLY UNUSED)
+        """
+        messages = [
+            {'role': 'user',
+             'content': query}
+        ]
+        completion = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=temperature
+        )
+        content = completion.choices[0].message
+        usage = dict(completion).get('usage')
+        return content, usage
+
+    def __chunk_text(self, text: str, window: int = 6000) -> list:
+        """
+        Break text into chunks to prepare for language model
+
+        Args:
+            text (str): text to be chunked
+            window (int, optional): tokens per chunk. Defaults to 6000.
+
+        Returns:
+            list[str]: chunked text
         """
         enc = tiktoken.encoding_for_model("gpt-3.5-turbo-1106")
         tokens = enc.encode(text)
@@ -140,19 +171,19 @@ class LanguageModel():
 
         return result
 
-    def get_model(self):
-        """_summary_
+    # def get_model(self):
+    #     """_summary_
 
-        Returns:
-            _type_: _description_
-        """
-        return self.model
+    #     Returns:
+    #         _type_: _description_
+    #     """
+    #     return self.model
 
-    def set_model(self, model: str):
-        error_string = """
-        Invalid model name specified.\
-        The only valid model names are %s"""
-        if model in config.VALID_MODELS:
-            self.model = model
-        else:
-            raise ValueError(error_string, str(config.VALID_MODELS))
+    # def set_model(self, model: str):
+    #     error_string = """
+    #     Invalid model name specified.\
+    #     The only valid model names are %s"""
+    #     if model in config.VALID_MODELS:
+    #         self.model = model
+    #     else:
+    #         raise ValueError(error_string, str(config.VALID_MODELS))

@@ -2,7 +2,11 @@
 
 Keeping my personal knowledge library up to date automagically
 
-# to execute
+# To run the main program, first start the virtual environment, then execute the app module
+## Create and install dependencies, if necessary
+```sh
+pyenv activate blogscraper-env
+```
 ```sh
 python blogscraper/app.py scrape
 ```
@@ -19,22 +23,29 @@ https://docs.python-guide.org/writing/structure/
 ## ToDo
 * make ui module
  * working on add-source
+ * Update start page of blog
+ * Delete a blog
+ * List which pages have been scraped for a given blog
+ * Create a report of activity in the last N days
+
 * Move on to other blogs
-* Eugene Yan
-* Chip Huyen
-* Lenny's Podcast
-* Stay Sassy
-* Lilian Weng
+ * Eugene Yan
+ * Chip Huyen
+ * Lenny's Podcast
+ * Stay Sassy
+ * Lilian Weng
+
+* Tests?
+* complete docstrings
+* automate weekly running of app
+* remove unused code
 * add "processed X docs in Y seconds"
 * add verbose mode
 * store usages
 
 ## Maybe Later ToDo
-* Build out data structure
-
-## Utils
-* Language model stuff
-* Logging stuff
+* Build out data structure using dataclasses
+* Make it work with local language models
 
 
 ### _sample mermaid chart_

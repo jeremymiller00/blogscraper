@@ -15,9 +15,6 @@ from language_model import LanguageModel
 class SubstackBot(BaseBot):
     """
     Substack child class for a bot to scrape the content from a Substack blog
-
-    Args:
-        BaseBot (_type_): _description_
     """
 
     def get_blog_pages(self):

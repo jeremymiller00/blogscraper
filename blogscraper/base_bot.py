@@ -27,9 +27,17 @@ class BaseBot():
         self.debug_n_articles = 1
         self.link_list = None
 
+    def get_and_scrape_pages(self) -> dict:
+        """
+        Get the new article urls, and scrape for a given source
+        """
+        self.get_blog_pages()
+        scraped = self.scrape_pages()
+        return scraped
+
     def get_blog_pages(self):
         """
-        Retrieve the list of pages from the blog's start page
+        Retrieve the list of page urls from the blog's start page
         Must be implemented by child class
 
         Raises:
@@ -45,7 +53,7 @@ class BaseBot():
         if self.debug:
             count = 0
         for page in self.link_list:
-            if page not in self.database.keys():  # NEEDS FIX
+            if page not in self.database.keys():
                 self.scrape_page(page)
                 now = datetime.now()
                 scraped[page] = now.isoformat()
@@ -53,7 +61,7 @@ class BaseBot():
                 if self.debug:
                     count += 1
                     if count >= self.debug_n_articles:
-                        return scraped
+                        return {}  # to avoid adding to database in debug mode
         
         return scraped
 
@@ -70,10 +78,3 @@ class BaseBot():
         """
         raise NotImplementedError("Base class BaseBot does not implement.")
 
-    def run(self):
-        """
-        Run the scraping program
-        """
-        self.get_blog_pages()
-        scraped_urls = self.scrape_pages()
-        return scraped_urls
