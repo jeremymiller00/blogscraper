@@ -12,18 +12,20 @@ from pyfiglet import Figlet
 
 import config
 from substack_bot import SubstackBot
+from staysaasy_bot import StaySaasyBot
 
 
 class UserInterface():
-    def __init__(self) -> None:
+    def __init__(self, logfile_path: str = 'logs/logs.log') -> None:
         self.database_path = config.DB_PATH
+        self.logfile_path = logfile_path
         self.database = None
         self.args = None
         self.parser = None
 
         logging.basicConfig(
             handlers=[
-                RotatingFileHandler('logs/logs.log',
+                RotatingFileHandler(self.logfile_path,
                                     maxBytes=100000,
                                     backupCount=10),
                 logging.StreamHandler()],  # send log messages to console
@@ -78,14 +80,24 @@ class UserInterface():
     def get_new_articles(self):
         for writer, context in config.BLOGS.items():
             logging.info("Getting new articles for %s", writer)
-            if context.get("bot").lower() == "substackbot":
-                bot = SubstackBot(blog_name=writer,
-                                  database=self.database,
-                                  debug=self.args.debug)
+            # if context.get("bot").lower() == "substackbot":
+            #     bot = SubstackBot(blog_name=writer,
+            #                       database=self.database,
+            #                       debug=self.args.debug)
+            #     scraped = bot.get_and_scrape_pages()
+            #     self.database.update(scraped)
+            #     if self.args.debug:  # break out of loop after first writer
+            #         return
+
+            if context.get("bot").lower() == "staysaasybot":
+                bot = StaySaasyBot(blog_name=writer,
+                                   database=self.database,
+                                   debug=self.args.debug)
                 scraped = bot.get_and_scrape_pages()
                 self.database.update(scraped)
                 if self.args.debug:  # break out of loop after first writer
                     return
+
             else:
                 logging.error("raised ValueError('Invalid bot specification')")
                 raise ValueError("Invalid bot specification")
@@ -125,7 +137,8 @@ class UserInterface():
         elif self.args.command == "scrape":
             self.read_database()
             self.get_new_articles()
-            self.write_database()
+            if not self.args.debug:
+                self.write_database()
 
 
 ###############################################
