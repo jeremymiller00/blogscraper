@@ -14,18 +14,18 @@ VALID_BOTS = ["substackbot"]
 
 # authors to follow
 BLOGS = {
-    # "John Cutler": {
-    #     "base_url": "https://cutlefish.substack.com/archive", 
-    #     "bot": "substackbot"
-    # },
-    # "Katie Bauer": {
-    #     "base_url": "https://wrongbutuseful.substack.com/archive", 
-    #     "bot": "substackbot"
-    # },
-    # "Simon Willison": {
-    #     "base_url": "https://simonw.substack.com/archive", 
-    #     "bot": "substackbot"
-    # },
+    "John Cutler": {
+        "base_url": "https://cutlefish.substack.com/archive",
+        "bot": "substackbot"
+    },
+    "Katie Bauer": {
+        "base_url": "https://wrongbutuseful.substack.com/archive",
+        "bot": "substackbot"
+    },
+    "Simon Willison": {
+        "base_url": "https://simonw.substack.com/archive",
+        "bot": "substackbot"
+    },
     "Stay Sassy": {
         "base_url": "https://staysaasy.com",
         "bot": "staysaasybot"

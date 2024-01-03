@@ -80,16 +80,16 @@ class UserInterface():
     def get_new_articles(self):
         for writer, context in config.BLOGS.items():
             logging.info("Getting new articles for %s", writer)
-            # if context.get("bot").lower() == "substackbot":
-            #     bot = SubstackBot(blog_name=writer,
-            #                       database=self.database,
-            #                       debug=self.args.debug)
-            #     scraped = bot.get_and_scrape_pages()
-            #     self.database.update(scraped)
-            #     if self.args.debug:  # break out of loop after first writer
-            #         return
+            if context.get("bot").lower() == "substackbot":
+                bot = SubstackBot(blog_name=writer,
+                                  database=self.database,
+                                  debug=self.args.debug)
+                scraped = bot.get_and_scrape_pages()
+                self.database.update(scraped)
+                if self.args.debug:  # break out of loop after first writer
+                    return
 
-            if context.get("bot").lower() == "staysaasybot":
+            elif context.get("bot").lower() == "staysaasybot":
                 bot = StaySaasyBot(blog_name=writer,
                                    database=self.database,
                                    debug=self.args.debug)

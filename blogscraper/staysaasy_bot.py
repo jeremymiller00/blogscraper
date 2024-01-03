@@ -46,13 +46,12 @@ class StaySaasyBot(BaseBot):
             return tag.attrs.get('id') == 'main'
 
         page = requests.get(page_url, timeout=100)
-        text = BeautifulSoup(page.content, 'html.parser')
-        # text = md(str(soup.body.find_all(is_main)))  # added .div
+        soup = BeautifulSoup(page.content, 'html.parser')
         logging.info("Retrieved text for: %s", page_url)
         lm = LanguageModel()
-        cleaned_text, usages = lm.clean_blog(text)
+        cleaned_text, usages = lm.clean_blog(soup.get_text())
         logging.info("Cleaned text via LLM for: %s", page_url)
-        cleaned_title = text.title.string.replace(":", " ").replace("/", " ")
+        cleaned_title = soup.title.string.replace(":", " ").replace("/", " ")
         with open(self.vault_path + cleaned_title + ".md", "w",
                   encoding="utf-8") as f:
             f.write(cleaned_text)

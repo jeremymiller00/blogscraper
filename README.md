@@ -21,13 +21,6 @@ python blogscraper/app.py -h
 https://docs.python-guide.org/writing/structure/
 
 ## ToDo
-* make ui module
- * working on add-source
- * Update start page of blog
- * Delete a blog
- * List which pages have been scraped for a given blog
- * Create a report of activity in the last N days
-
 * Move on to other blogs
  * Eugene Yan
  * Chip Huyen
@@ -35,7 +28,15 @@ https://docs.python-guide.org/writing/structure/
  * Stay Sassy
  * Lilian Weng
 
+* make ui module
+ * working on add-source
+ * Update start page of blog
+ * Delete a blog
+ * List which pages have been scraped for a given blog
+ * Create a report of activity in the last N days
+
 * Tests?
+* Include the url in the document
 * complete docstrings
 * automate weekly running of app
 * remove unused code
