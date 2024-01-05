@@ -21,6 +21,9 @@ python blogscraper/app.py -h
 https://docs.python-guide.org/writing/structure/
 
 ## ToDo
+* Move away from LLM
+ * Saasy class, plus some regex ought to do it
+
 * Move on to other blogs
  * Eugene Yan
  * Chip Huyen
