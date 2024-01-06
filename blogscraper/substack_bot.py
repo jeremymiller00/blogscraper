@@ -2,6 +2,7 @@
 # from datetime import datetime
 import logging
 from collections import Counter
+import re
 
 import requests
 from markdownify import markdownify as md
@@ -57,4 +58,3 @@ class SubstackBot(BaseBot):
                   encoding="utf-8") as f:
             f.write(cleaned_text)
         logging.info("Wrote text to file for: %s", page_url)
-

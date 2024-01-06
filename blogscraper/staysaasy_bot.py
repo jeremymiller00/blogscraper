@@ -1,15 +1,12 @@
-# import json
-# from datetime import datetime
 import logging
-from collections import Counter
+import re
 
 import requests
-from markdownify import markdownify as md
+# from markdownify import markdownify as md
 from bs4 import BeautifulSoup
 
 import config
 from base_bot import BaseBot
-from language_model import LanguageModel
 
 
 class StaySaasyBot(BaseBot):
@@ -26,8 +23,6 @@ class StaySaasyBot(BaseBot):
             timeout=100)
         soup = BeautifulSoup(pages.content, 'html.parser')
         link_list = [link.get('href') for link in soup.find_all('a')]
-        # c = Counter()
-        # c.update(link_list)
         # all links to articles have a date in their url in for the format:
         # /2023/12/01
         base = config.BLOGS.get('Stay Sassy').get("base_url")
@@ -48,8 +43,8 @@ class StaySaasyBot(BaseBot):
         page = requests.get(page_url, timeout=100)
         soup = BeautifulSoup(page.content, 'html.parser')
         logging.info("Retrieved text for: %s", page_url)
-        lm = LanguageModel()
-        cleaned_text, usages = lm.clean_blog(soup.get_text())
+        # Page is clean enough that just get text and replace multiple new lines is fine
+        cleaned_text = re.sub(r'(?:\r?\n|\r){2,}', '\n', soup.get_text())
         logging.info("Cleaned text via LLM for: %s", page_url)
         cleaned_title = soup.title.string.replace(":", " ").replace("/", " ")
         with open(self.vault_path + cleaned_title + ".md", "w",
