@@ -13,6 +13,7 @@ from pyfiglet import Figlet
 import config
 from substack_bot import SubstackBot
 from staysaasy_bot import StaySaasyBot
+from eugeneyan_bot import EugeneYanBot
 
 
 class UserInterface():
@@ -91,6 +92,15 @@ class UserInterface():
 
             elif context.get("bot").lower() == "staysaasybot":
                 bot = StaySaasyBot(blog_name=writer,
+                                   database=self.database,
+                                   debug=self.args.debug)
+                scraped = bot.get_and_scrape_pages()
+                self.database.update(scraped)
+                if self.args.debug:  # break out of loop after first writer
+                    return
+
+            elif context.get("bot").lower() == "eugeneyanbot":
+                bot = EugeneYanBot(blog_name=writer,
                                    database=self.database,
                                    debug=self.args.debug)
                 scraped = bot.get_and_scrape_pages()

@@ -29,9 +29,12 @@ BLOGS = {
     "Stay Sassy": {
         "base_url": "https://staysaasy.com",
         "bot": "staysaasybot"
+    },
+    "Eugene Yan": {
+        "base_url": "https://eugeneyan.com/writing",
+        "bot": "eugeneyanbot"
     }
 }
-# "Eugene Yan" : "https://eugeneyan.com/writing/"
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
 # chip huyen
 # lenny's podcast

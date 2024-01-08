@@ -9,7 +9,7 @@ import config
 from base_bot import BaseBot
 
 
-class StaySaasyBot(BaseBot):
+class EugeneYanBot(BaseBot):
     """
     StaySaasy child class for a bot to scrape the content from a Substack blog
     """
@@ -23,11 +23,10 @@ class StaySaasyBot(BaseBot):
             timeout=100)
         soup = BeautifulSoup(pages.content, 'html.parser')
         link_list = [link.get('href') for link in soup.find_all('a')]
-        # all links to articles have a date in their url in for the format:
-        # /2023/12/01
-        base = config.BLOGS.get('Stay Sassy').get("base_url")
-        link_list_filtered = [base + x for x in link_list if "202" in x]
-        self.link_list = link_list_filtered
+        base = config.BLOGS.get('Eugene Yan').get("base_url")
+        link_list_filtered = [link for link in link_list if link[:9] == '/writing/' and len(link) > 9]
+        link_list_appended = [base[:-8] + link for link in link_list_filtered]
+        self.link_list = link_list_appended
         logging.info("Retrieved page list for: %s", self.blog_name)
 
     def scrape_page(self, page_url: str):
@@ -37,9 +36,6 @@ class StaySaasyBot(BaseBot):
         Args:
             page_url (str): url of an individual blog post
         """
-        # def is_main(tag):
-        #     return tag.attrs.get('id') == 'main'
-
         page = requests.get(page_url, timeout=100)
         soup = BeautifulSoup(page.content, 'html.parser')
         logging.info("Retrieved text for: %s", page_url)

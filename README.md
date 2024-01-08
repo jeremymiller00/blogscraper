@@ -28,7 +28,6 @@ https://docs.python-guide.org/writing/structure/
  * Eugene Yan
  * Chip Huyen
  * Lenny's Podcast
- * Stay Sassy
  * Lilian Weng
 
 * make ui module
