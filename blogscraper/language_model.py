@@ -28,6 +28,8 @@ class LanguageModel():
         Clean a given scraped text (blog post)
         Possibly in chunks
 
+
+
         Args:
             text (str): text to be cleaned
 
@@ -46,7 +48,11 @@ class LanguageModel():
             Your job is return a cleaned version of the text \
             which contains only the content of the article. \
             Remove any metadata or artifacts of scaping the blog website.\
-            Do not summarize the article, but return it in it's entirety. \
+            Return the article in it's entirety. \
+            At the top, under the heading 'Summary:', \
+            Provide a concise summary of the entire article \
+            of no more that 200 words. \
+            Your cleaned text will follow this summary.
 
             ---{t}---
             """
@@ -170,7 +176,7 @@ class LanguageModel():
         logging.info("Text broken into %s chunks", chunks)
 
         return result
-
+    
     # def get_model(self):
     #     """_summary_
 

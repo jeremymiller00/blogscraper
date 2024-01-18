@@ -21,8 +21,6 @@ python blogscraper/app.py -h
 https://docs.python-guide.org/writing/structure/
 
 ## ToDo
-* LLM Summary for each one at the top
-
 * Move on to other blogs
  * Chip Huyen
  * Lenny's Podcast

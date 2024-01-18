@@ -10,7 +10,7 @@ Available Commands:
     scrape      scrape new articles
 """
 
-VALID_BOTS = ["substackbot"]
+# VALID_BOTS = ["substackbot"]
 
 # authors to follow
 BLOGS = {

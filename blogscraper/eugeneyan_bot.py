@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 import config
 from base_bot import BaseBot
+from language_model import LanguageModel
 
 
 class EugeneYanBot(BaseBot):
@@ -39,9 +40,8 @@ class EugeneYanBot(BaseBot):
         page = requests.get(page_url, timeout=100)
         soup = BeautifulSoup(page.content, 'html.parser')
         logging.info("Retrieved text for: %s", page_url)
-        # Page is clean enough
-        # just get text and replace multiple new lines is fine
-        cleaned_text = re.sub(r'(?:\r?\n|\r){2,}', '\n', soup.get_text())
+        lm = LanguageModel()
+        cleaned_text, usages = lm.clean_blog(soup.get_text())
         logging.info("Cleaned text via LLM for: %s", page_url)
         cleaned_title = soup.title.string.replace(":", " ").replace("/", " ")
         with open(self.vault_path + cleaned_title + ".md", "w",

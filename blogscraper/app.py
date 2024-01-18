@@ -110,7 +110,7 @@ class UserInterface():
 
             else:
                 logging.error("raised ValueError('Invalid bot specification')")
-                raise ValueError("Invalid bot specification")
+                raise ValueError(f"Invalid bot specification: {context.get('bot')} for writer {writer}")
 
     def get_articles_for_source(self):
         """
