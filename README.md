@@ -10,11 +10,18 @@ pyenv activate blogscraper-env
 ```sh
 python blogscraper/app.py scrape
 ```
+## Run in debug mode
+```sh
+python blogscraper/app.py scrape -d
+```
 ## To get help
 ```sh
 python blogscraper/app.py -h
 ```
-
+## For using local llms, in another terminal window:
+```sh
+ollama serve
+```
 
 
 ## Reference

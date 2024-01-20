@@ -28,8 +28,6 @@ class LanguageModel():
         Clean a given scraped text (blog post)
         Possibly in chunks
 
-
-
         Args:
             text (str): text to be cleaned
 
@@ -41,23 +39,26 @@ class LanguageModel():
         usages = []
         for t in self.__chunk_text(text):
             prompt = f"""
-            You are a text cleaning agent. \
-            You receive text delimited by triple dashes \
-            which has been scraped from a website which contains a blog post. \
-            The text will inevitably be dirty. \
-            Your job is return a cleaned version of the text \
-            which contains only the content of the article. \
-            Remove any metadata or artifacts of scaping the blog website.\
-            Return the article in it's entirety. \
-            At the top, under the heading 'Summary:', \
-            Provide a concise summary of the entire article \
-            of no more that 200 words. \
-            Your cleaned text will follow this summary.
+                You are a text cleaning agent. \
+                You receive text delimited by triple dashes \
+                which has been scraped from a website which contains a blog post. \
+                The text will inevitably be dirty. \
+                You have two jobs. \
+                Your first job is to return a brief summary at the top, \
+                of no more that 100 words \
+                under the heading 'Summary:' \
+                Your second job is to follow the summary \
+                with a cleaned version of the text \
+                which contains only the content of the article \
+                and is presented under the heading 'Article:'. \
+                Remove any metadata or artifacts of scaping the blog website.\
+                Return the article in it's entirety. \
 
-            ---{t}---
+                ---{t}---
             """
             content, usage = self.generate(prompt)
-            result += content.content
+            # result += content.get("response")  # ollama format
+            result += content.content  # openai format
             usages.append(usage)
 
         return result, usages
@@ -109,7 +110,8 @@ class LanguageModel():
         }
         response = requests.post(config.LOCAL_LLM_URL, json=body, timeout=500)
         if response.status_code == 200:
-            return json.loads(response.content)
+            # None is needed to match output format with gpt
+            return json.loads(response.content), None
         else:
             logging.error("Error: Failed to generate response.")
             return None

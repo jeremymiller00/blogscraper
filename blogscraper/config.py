@@ -45,7 +45,6 @@ VAULT_PATH = "/Users/Jeremy/Data-Science-Vault/DS-Library/Articles/new/"
 DEBUG_VAULT_PATH = "/Users/Jeremy/testvault/"
 DB_PATH = "/Users/Jeremy/Documents/Data_Science/Projects/blogscraper/blogscraper/database.json"
 
-
 # llm stuff
 # local models use ollama
 VALID_MODELS = ["llama2", "mistral", "gpt-3.5-turbo"]
