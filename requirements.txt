@@ -15,6 +15,7 @@ h11==0.14.0
 httpcore==1.0.2
 httpx==0.26.0
 idna==3.6
+iniconfig==2.0.0
 ipykernel==6.27.1
 ipython==8.18.1
 jedi==0.19.1
@@ -29,6 +30,7 @@ packaging==23.2
 parso==0.8.3
 pexpect==4.9.0
 platformdirs==4.1.0
+pluggy==1.4.0
 prompt-toolkit==3.0.43
 psutil==5.9.7
 ptyprocess==0.7.0

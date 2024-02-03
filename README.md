@@ -32,6 +32,7 @@ https://docs.python-guide.org/writing/structure/
  * Chip Huyen
  * Lenny's Podcast
  * Lilian Weng
+ * SVPG
 
 * make ui module
  * working on add-source
