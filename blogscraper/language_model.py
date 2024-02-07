@@ -19,8 +19,13 @@ class LanguageModel():
     """
     Represents a language model that can be used for many purposes
     Initial use case is to clean up text from scraped blog
+
+    Model strings:
+    gpt-3.5-turbo-1106
+    gpt-3.5-turbo-0125
+    gpt-4-0125-preview
     """
-    def __init__(self, model: str = "gpt-3.5-turbo-1106"):
+    def __init__(self, model: str = "gpt-3.5-turbo-0125"):
         self.model = model
 
     def clean_blog(self, text: str) -> (str, list):
@@ -79,7 +84,7 @@ class LanguageModel():
         """
         if self.model in ["llama2", "mistral"]:
             return self.__generate_local(query=query, model=self.model)
-        elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106"]:
+        elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-4-0125-preview"]:
             return self.__generate_gpt(query=query, model=self.model)
         else:
             raise ValueError(f"Invalid model: \

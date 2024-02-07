@@ -47,7 +47,7 @@ DB_PATH = "/Users/Jeremy/Documents/Data_Science/Projects/blogscraper/blogscraper
 
 # llm stuff
 # local models use ollama
-VALID_MODELS = ["llama2", "mistral", "gpt-3.5-turbo"]
+VALID_MODELS = ["llama2", "mistral", "gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-4-0125-preview"]
 LOCAL_LLM_URL = "http://localhost:11434/api/generate"
 # PROMPT = """
 #     You are an assistant for question-answering tasks. \
