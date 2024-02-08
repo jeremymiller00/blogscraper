@@ -38,10 +38,10 @@ BLOGS = {
         "base_url": "https://huyenchip.com/blog",
         "bot": "chiphuyenbot"
     },
-    # "Lenny": {
-    #     "base_url": "https://www.lennysnewsletter.com/t/",
-    #     "bot": "lennybot"
-    # }
+    "Lenny": {
+        "base_url": "https://www.lennysnewsletter.com/t/",
+        "bot": "lennybot"
+    }
 }
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
 # chip huyen

@@ -23,10 +23,22 @@ class LennyBot(BaseBot):
             timeout=100)
         soup = BeautifulSoup(pages.content, 'html.parser')
         link_list = [link.get('href') for link in soup.find_all('a')]
-        base = config.BLOGS.get('Lenny').get("base_url")
-        link_list_filtered = [link for link in link_list if isinstance(link, str) and link[:4] == '/202']
-        link_list_appended = [base[:-5] + link for link in link_list_filtered]
-        self.link_list = link_list_appended
+        # base = config.BLOGS.get('Lenny').get("base_url")
+        link_list_filtered = [link for link in link_list if isinstance(link, str) and link[32:35] == '/t/']        
+        # link_list_appended = [base[:-5] + link for link in link_list_filtered]
+
+        # for lennybot, need to recursively get links from this list ^^^
+        all_links = []
+        for link in link_list_filtered:
+            pages = requests.get(link, timeout=100)
+            soup = BeautifulSoup(pages.content, 'html.parser')
+            link_list = [link.get('href') for link in soup.find_all('a')]
+            link_list_filtered = [link for link in link_list if isinstance(link, str) and "lennysnewsletter" in link and "comment" not in link and "subscribe" not in link]
+            all_links.extend(link_list_filtered)
+
+        all_links = list(set(all_links))
+        
+        self.link_list = all_links
         logging.info("Retrieved page list for: %s", self.blog_name)
 
     def scrape_page(self, page_url: str):
