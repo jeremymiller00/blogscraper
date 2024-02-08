@@ -29,7 +29,6 @@ https://docs.python-guide.org/writing/structure/
 
 ## ToDo
 * Move on to other blogs
- * Chip Huyen
  * Lenny's Podcast
  * Lilian Weng
  * SVPG

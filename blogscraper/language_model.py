@@ -1,8 +1,3 @@
-# import os
-# from bs4 import BeautifulSoup
-# from datetime import datetime
-# from logging.handlers import RotatingFileHandler
-
 import json
 import logging
 
@@ -25,7 +20,7 @@ class LanguageModel():
     gpt-3.5-turbo-0125
     gpt-4-0125-preview
     """
-    def __init__(self, model: str = "gpt-3.5-turbo-0125"):
+    def __init__(self, model: str = "gpt-3.5-turbo-1106"):
         self.model = model
 
     def clean_blog(self, text: str) -> (str, list):

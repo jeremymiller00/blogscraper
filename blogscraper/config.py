@@ -33,7 +33,15 @@ BLOGS = {
     "Eugene Yan": {
         "base_url": "https://eugeneyan.com/writing",
         "bot": "eugeneyanbot"
-    }
+    },
+    "Chip Huyen": {
+        "base_url": "https://huyenchip.com/blog",
+        "bot": "chiphuyenbot"
+    },
+    # "Lenny": {
+    #     "base_url": "https://www.lennysnewsletter.com/t/",
+    #     "bot": "lennybot"
+    # }
 }
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
 # chip huyen
