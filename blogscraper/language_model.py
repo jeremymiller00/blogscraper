@@ -84,7 +84,7 @@ class LanguageModel():
         """
         if self.model in ["llama2", "mistral"]:
             return self.__generate_local(query=query, model=self.model)
-        elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-4-0125-preview"]:
+        elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-0125", "gpt-4-0125-preview"]:
             return self.__generate_gpt(query=query, model=self.model)
         else:
             raise ValueError(f"Invalid model: \
