@@ -41,7 +41,12 @@ BLOGS = {
     "Lenny": {
         "base_url": "https://www.lennysnewsletter.com/t/",
         "bot": "lennybot"
+    },
+    "SVPG": {
+        "base_url": "https://www.svpg.com/articles",
+        "bot": "svpgbot"
     }
+
 }
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
 # chip huyen

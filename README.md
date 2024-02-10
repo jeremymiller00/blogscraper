@@ -28,13 +28,10 @@ ollama serve
 https://docs.python-guide.org/writing/structure/
 
 ## ToDo
-* Move on to other blogs
- * Lenny's Podcast
- * Fix bad code
-  * Main if else loop
-  * Too many places to change too debug
- * Lilian Weng
- * SVPG
+* Fix bad code
+ * Main if else loop
+ * Too many places to change too debug
+* Lilian Weng
 
 * make ui module
  * working on add-source

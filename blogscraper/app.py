@@ -16,6 +16,7 @@ from staysaasy_bot import StaySaasyBot
 from eugeneyan_bot import EugeneYanBot
 from chiphuyen_bot import ChipHuyenBot
 from lenny_bot import LennyBot
+from svpg_bot import SVPGBot
 
 
 class UserInterface():
@@ -121,6 +122,15 @@ class UserInterface():
 
             elif context.get("bot").lower() == "lennybot":
                 bot = LennyBot(blog_name=writer,
+                                   database=self.database,
+                                   debug=self.args.debug)
+                scraped = bot.get_and_scrape_pages()
+                self.database.update(scraped)
+                if self.args.debug:  # break out of loop after first writer
+                    return
+
+            elif context.get("bot").lower() == "svpgbot":
+                bot = SVPGBot(blog_name=writer,
                                    database=self.database,
                                    debug=self.args.debug)
                 scraped = bot.get_and_scrape_pages()
