@@ -64,6 +64,9 @@ class UserInterface():
         logging.info("Showed sources")
 
     def add_source(self):
+        """ 
+        Add a new blog to the roster of those to follow        
+        """
         bot = input("Bot: ")
         if bot not in config.VALID_BOTS:
             print(f"Invalid bot. Only valid bots are {config.VALID_BOTS}")
@@ -76,71 +79,36 @@ class UserInterface():
         logging.info("Added source")
 
     def update_source(self):
+        """ 
+        Update an existing entry in the roster of blogs to follow
+        """
         pass
 
     def remove_source(self):
+        """ 
+        Remove an entry from the roster of blogs to follow
+        """
         pass
 
     def get_new_articles(self):
+        """ 
+        Get new article for all blogs in the roster
+        """
         for writer, context in config.BLOGS.items():
             logging.info("Getting new articles for %s", writer)
-            if context.get("bot").lower() == "substackbot":
-                bot = SubstackBot(blog_name=writer,
-                                  database=self.database,
-                                  debug=self.args.debug)
-                scraped = bot.get_and_scrape_pages()
-                self.database.update(scraped)
-                if self.args.debug:  # break out of loop after first writer
-                    return
+            bot = self._create_bot(writer=writer, context=context)
+            scraped = bot.get_and_scrape_pages()
+            self.database.update(scraped)
+            if self.args.debug:  # break out of loop after first writer
+                return
 
-            elif context.get("bot").lower() == "staysaasybot":
-                bot = StaySaasyBot(blog_name=writer,
-                                   database=self.database,
-                                   debug=self.args.debug)
-                scraped = bot.get_and_scrape_pages()
-                self.database.update(scraped)
-                if self.args.debug:  # break out of loop after first writer
-                    return
-
-            elif context.get("bot").lower() == "eugeneyanbot":
-                bot = EugeneYanBot(blog_name=writer,
-                                   database=self.database,
-                                   debug=self.args.debug)
-                scraped = bot.get_and_scrape_pages()
-                self.database.update(scraped)
-                if self.args.debug:  # break out of loop after first writer
-                    return
-
-            elif context.get("bot").lower() == "chiphuyenbot":
-                bot = ChipHuyenBot(blog_name=writer,
-                                   database=self.database,
-                                   debug=self.args.debug)
-                scraped = bot.get_and_scrape_pages()
-                self.database.update(scraped)
-                if self.args.debug:  # break out of loop after first writer
-                    return
-
-            elif context.get("bot").lower() == "lennybot":
-                bot = LennyBot(blog_name=writer,
-                                   database=self.database,
-                                   debug=self.args.debug)
-                scraped = bot.get_and_scrape_pages()
-                self.database.update(scraped)
-                if self.args.debug:  # break out of loop after first writer
-                    return
-
-            elif context.get("bot").lower() == "svpgbot":
-                bot = SVPGBot(blog_name=writer,
-                                   database=self.database,
-                                   debug=self.args.debug)
-                scraped = bot.get_and_scrape_pages()
-                self.database.update(scraped)
-                if self.args.debug:  # break out of loop after first writer
-                    return
-
-            else:
-                logging.error("raised ValueError('Invalid bot specification')")
-                raise ValueError(f"Invalid bot specification: {context.get('bot')} for writer {writer}")
+    def _create_bot(self, writer, context):
+        klass = globals()[context.get("bot")]
+        instance = klass(blog_name=writer,
+                         database=self.database,
+                         debug=self.args.debug)
+        
+        return instance
 
     def get_articles_for_source(self):
         """
@@ -149,6 +117,9 @@ class UserInterface():
         pass
 
     def get_args(self):
+        """ 
+        Get command line args
+        """
         parser = argparse.ArgumentParser(
             prog='Blog Scraper',
             description='Auto-get new articles for followed authors.',

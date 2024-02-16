@@ -10,42 +10,40 @@ Available Commands:
     scrape      scrape new articles
 """
 
-# VALID_BOTS = ["substackbot"]
-
 # authors to follow
 BLOGS = {
-    "John Cutler": {
-        "base_url": "https://cutlefish.substack.com/archive",
-        "bot": "substackbot"
-    },
-    "Katie Bauer": {
-        "base_url": "https://wrongbutuseful.substack.com/archive",
-        "bot": "substackbot"
-    },
-    "Simon Willison": {
-        "base_url": "https://simonw.substack.com/archive",
-        "bot": "substackbot"
-    },
+    # "John Cutler": {
+    #     "base_url": "https://cutlefish.substack.com/archive",
+    #     "bot": "SubstackBot"
+    # },
+    # "Katie Bauer": {
+    #     "base_url": "https://wrongbutuseful.substack.com/archive",
+    #     "bot": "SubstackBot"
+    # },
+    # "Simon Willison": {
+    #     "base_url": "https://simonw.substack.com/archive",
+    #     "bot": "SubstackBot"
+    # },
     "Stay Sassy": {
         "base_url": "https://staysaasy.com",
-        "bot": "staysaasybot"
+        "bot": "StaySaasyBot"
     },
-    "Eugene Yan": {
-        "base_url": "https://eugeneyan.com/writing",
-        "bot": "eugeneyanbot"
-    },
-    "Chip Huyen": {
-        "base_url": "https://huyenchip.com/blog",
-        "bot": "chiphuyenbot"
-    },
-    "Lenny": {
-        "base_url": "https://www.lennysnewsletter.com/t/",
-        "bot": "lennybot"
-    },
-    "SVPG": {
-        "base_url": "https://www.svpg.com/articles",
-        "bot": "svpgbot"
-    }
+    # "Eugene Yan": {
+    #     "base_url": "https://eugeneyan.com/writing",
+    #     "bot": "EugeneYanBot"
+    # },
+    # "Chip Huyen": {
+    #     "base_url": "https://huyenchip.com/blog",
+    #     "bot": "ChipHuyenBot"
+    # },
+    # "Lenny": {
+    #     "base_url": "https://www.lennysnewsletter.com/t/",
+    #     "bot": "LennyBot"
+    # },
+    # "SVPG": {
+    #     "base_url": "https://www.svpg.com/articles",
+    #     "bot": "SVPGBot"
+    # }
 
 }
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
@@ -60,7 +58,7 @@ DB_PATH = "/Users/Jeremy/Documents/Data_Science/Projects/blogscraper/blogscraper
 
 # llm stuff
 # local models use ollama
-VALID_MODELS = ["llama2", "mistral", "gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-4-0125-preview"]
+VALID_MODELS = ["llama2", "mistral", "gpt-3.5-turbo", "gpt-4-0125-preview"]
 LOCAL_LLM_URL = "http://localhost:11434/api/generate"
 # PROMPT = """
 #     You are an assistant for question-answering tasks. \
@@ -73,7 +71,7 @@ LOCAL_LLM_URL = "http://localhost:11434/api/generate"
 # """
 
 # openai stuff
-OPENAI_SYSTEM_MESSAGE = None
+# OPENAI_SYSTEM_MESSAGE = None
 
 # messages = [
 # {'role':'system', 
