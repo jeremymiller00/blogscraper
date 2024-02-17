@@ -12,39 +12,38 @@ Available Commands:
 
 # authors to follow
 BLOGS = {
-    # "John Cutler": {
-    #     "base_url": "https://cutlefish.substack.com/archive",
-    #     "bot": "SubstackBot"
-    # },
-    # "Katie Bauer": {
-    #     "base_url": "https://wrongbutuseful.substack.com/archive",
-    #     "bot": "SubstackBot"
-    # },
-    # "Simon Willison": {
-    #     "base_url": "https://simonw.substack.com/archive",
-    #     "bot": "SubstackBot"
-    # },
+    "John Cutler": {
+        "base_url": "https://cutlefish.substack.com/archive",
+        "bot": "SubstackBot"
+    },
+    "Katie Bauer": {
+        "base_url": "https://wrongbutuseful.substack.com/archive",
+        "bot": "SubstackBot"
+    },
+    "Simon Willison": {
+        "base_url": "https://simonw.substack.com/archive",
+        "bot": "SubstackBot"
+    },
     "Stay Sassy": {
         "base_url": "https://staysaasy.com",
         "bot": "StaySaasyBot"
     },
-    # "Eugene Yan": {
-    #     "base_url": "https://eugeneyan.com/writing",
-    #     "bot": "EugeneYanBot"
-    # },
-    # "Chip Huyen": {
-    #     "base_url": "https://huyenchip.com/blog",
-    #     "bot": "ChipHuyenBot"
-    # },
-    # "Lenny": {
-    #     "base_url": "https://www.lennysnewsletter.com/t/",
-    #     "bot": "LennyBot"
-    # },
-    # "SVPG": {
-    #     "base_url": "https://www.svpg.com/articles",
-    #     "bot": "SVPGBot"
-    # }
-
+    "Eugene Yan": {
+        "base_url": "https://eugeneyan.com/writing",
+        "bot": "EugeneYanBot"
+    },
+    "Chip Huyen": {
+        "base_url": "https://huyenchip.com/blog",
+        "bot": "ChipHuyenBot"
+    },
+    "Lenny": {
+        "base_url": "https://www.lennysnewsletter.com/t/",
+        "bot": "LennyBot"
+    },
+    "SVPG": {
+        "base_url": "https://www.svpg.com/articles",
+        "bot": "SVPGBot"
+    }
 }
 # "Lilian Weng" : "https://lilianweng.github.io/archives/"
 # chip huyen

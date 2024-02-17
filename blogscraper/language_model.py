@@ -16,14 +16,29 @@ class LanguageModel():
     Initial use case is to clean up text from scraped blog
 
     Model strings:
+    gpt-3.5-turbo
     gpt-3.5-turbo-1106
     gpt-3.5-turbo-0125
     gpt-4-0125-preview
     """
-    def __init__(self, model: str = "gpt-3.5-turbo-1106"):
+    def __init__(self, model: str = "gpt-3.5-turbo"):
         self.model = model
 
-    def clean_blog(self, text: str) -> (str, list):
+    def clean_blog(self, text: str):
+        """ 
+        Make sure the returned result is not too short
+        Try up to 10 times
+        """
+        count = 0
+        result = ""
+        while len(result) < (len(text) / 2):
+            result, usages = self.__clean_blog(text)
+            count += 1
+            if count >= 10:
+                break
+        return result, usages
+
+    def __clean_blog(self, text: str):
         """
         Clean a given scraped text (blog post)
         Possibly in chunks
