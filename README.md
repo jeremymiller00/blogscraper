@@ -31,10 +31,9 @@ https://docs.python-guide.org/writing/structure/
 * Fix bad code
  * Main if else loop
  * Too many places to change too debug
-* Fix short article after summary bug
+* Remove splitting longer articles with Claude
 * Move to Langchain
 * https://python.langchain.com/docs/guides/local_llms
-* Use local LLM the whole time with ollama
 * Lilian Weng
 
 * make ui module

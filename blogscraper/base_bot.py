@@ -24,7 +24,7 @@ class BaseBot():
         else:
             self.vault_path = config.VAULT_PATH
         self.database = database
-        self.debug_n_articles = 3
+        self.debug_n_articles = 2
         self.link_list = None
 
     def get_and_scrape_pages(self) -> dict:

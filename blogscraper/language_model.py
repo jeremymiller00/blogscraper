@@ -1,13 +1,22 @@
+import os
 import json
 import logging
 
 import requests
 import tiktoken
 from openai import OpenAI
+import anthropic
+from dotenv import load_dotenv
 
 import config
 
-client = OpenAI()
+load_dotenv()
+
+client = anthropic.Anthropic(
+    # defaults to os.environ.get("ANTHROPIC_API_KEY")
+    # api_key=os.environ.get("ANTHROPIC_API_KEY")
+)
+# client = OpenAI()
 
 
 class LanguageModel():
@@ -20,23 +29,27 @@ class LanguageModel():
     gpt-3.5-turbo-1106
     gpt-3.5-turbo-0125
     gpt-4-0125-preview
+    claude-3-haiku
+    claude-3-sonnet-20240229
     """
-    def __init__(self, model: str = "gpt-3.5-turbo"):
+    def __init__(self, model: str = "claude-3-sonnet-20240229"):
         self.model = model
 
     def clean_blog(self, text: str):
         """ 
         Make sure the returned result is not too short
-        Try up to 10 times
+        Try up to X times
         """
-        count = 0
-        result = ""
-        while len(result) < (len(text) / 2):
-            result, usages = self.__clean_blog(text)
-            count += 1
-            if count >= 10:
-                break
-        return result, usages
+        # count = 0
+        # result = ""
+        # try another time if result comes back very short
+        # while len(result) < (len(text) / 2):
+        #     result, usages = self.__clean_blog(text)
+        #     count += 1
+        #     if count >= 2:
+        #         break
+        # return result, usages
+        return self.__clean_blog(text)
 
     def __clean_blog(self, text: str):
         """
@@ -73,7 +86,8 @@ class LanguageModel():
             """
             content, usage = self.generate(prompt)
             # result += content.get("response")  # ollama format
-            result += content.content  # openai format
+            # result += content.content  # openai format
+            result += dict(content[0])["text"]  # claude format
             usages.append(usage)
 
         return result, usages
@@ -96,6 +110,8 @@ class LanguageModel():
             return self.__generate_local(query=query, model=self.model)
         elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-0125", "gpt-4-0125-preview"]:
             return self.__generate_gpt(query=query, model=self.model)
+        elif self.model in ["claude-3-sonnet-20240229"]:
+            return self.__generate_claude(query=query, model=self.model)
         else:
             raise ValueError(f"Invalid model: \
                              only valid values are {config.VALID_MODELS}")
@@ -130,6 +146,31 @@ class LanguageModel():
         else:
             logging.error("Error: Failed to generate response.")
             return None
+
+    def __generate_claude(self,
+                          query: str,
+                          model: str,
+                          temperature: int = 0):
+        """
+        Generate a response from GPT (3.5)
+        Should only be called by generate()
+
+        Args:
+            query (str): input to language model
+            model (str, optional): Model name. Defaults to "gpt-3.5-turbo".
+            temperature (int, optional): model 'creativity'. Defaults to 0.
+
+        Returns:
+            str, list(Usage): model response, list of usages (CURRENTLY UNUSED)
+        """
+        message = client.messages.create(
+            model=model,
+            max_tokens=4096,
+            messages=[
+                {"role": "user", "content": query}
+            ]
+        )
+        return message.content, None
 
     def __generate_gpt(self,
                        query: str,
