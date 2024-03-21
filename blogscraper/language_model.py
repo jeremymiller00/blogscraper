@@ -29,10 +29,10 @@ class LanguageModel():
     gpt-3.5-turbo-1106
     gpt-3.5-turbo-0125
     gpt-4-0125-preview
-    claude-3-haiku
+    claude-3-haiku-20240307
     claude-3-sonnet-20240229
     """
-    def __init__(self, model: str = "claude-3-sonnet-20240229"):
+    def __init__(self, model: str = "claude-3-haiku-20240307"):
         self.model = model
 
     def clean_blog(self, text: str):
@@ -110,7 +110,7 @@ class LanguageModel():
             return self.__generate_local(query=query, model=self.model)
         elif self.model in ["gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-0125", "gpt-4-0125-preview"]:
             return self.__generate_gpt(query=query, model=self.model)
-        elif self.model in ["claude-3-sonnet-20240229"]:
+        elif self.model in ["claude-3-sonnet-20240229", "claude-3-haiku-20240307"]:
             return self.__generate_claude(query=query, model=self.model)
         else:
             raise ValueError(f"Invalid model: \
