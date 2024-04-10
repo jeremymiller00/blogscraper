@@ -32,7 +32,7 @@ class LanguageModel():
     claude-3-haiku-20240307
     claude-3-sonnet-20240229
     """
-    def __init__(self, model: str = "claude-3-haiku-20240307"):
+    def __init__(self, model: str = "gpt-3.5-turbo-0125"):
         self.model = model
 
     def clean_blog(self, text: str):
