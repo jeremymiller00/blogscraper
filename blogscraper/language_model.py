@@ -12,11 +12,11 @@ import config
 
 load_dotenv()
 
-client = anthropic.Anthropic(
+# client = anthropic.Anthropic(
     # defaults to os.environ.get("ANTHROPIC_API_KEY")
     # api_key=os.environ.get("ANTHROPIC_API_KEY")
-)
-# client = OpenAI()
+# )
+client = OpenAI()
 
 
 class LanguageModel():
@@ -86,8 +86,8 @@ class LanguageModel():
             """
             content, usage = self.generate(prompt)
             # result += content.get("response")  # ollama format
-            # result += content.content  # openai format
-            result += dict(content[0])["text"]  # claude format
+            result += content.content  # openai format
+            # result += dict(content[0])["text"]  # claude format
             usages.append(usage)
 
         return result, usages
