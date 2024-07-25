@@ -49,12 +49,12 @@ class SVPGBot(BaseBot):
         page = requests.get(page_url, timeout=100)
         soup = BeautifulSoup(page.content, 'html.parser')
         logging.info("Retrieved text for: %s", page_url)
-        lm = LanguageModel()
-        cleaned_text, usages = lm.clean_blog(re.sub(r'(?:\r?\n|\r){2,}', "", soup.get_text()))
-        logging.info("Cleaned text via LLM for: %s", page_url)
+        # lm = LanguageModel()
+        # cleaned_text, usages = lm.clean_blog(re.sub(r'(?:\r?\n|\r){2,}', "", soup.get_text()))
+        # logging.info("Cleaned text via LLM for: %s", page_url)
         cleaned_title = soup.title.string.replace(":", " ").replace("/", " ")
         with open(self.vault_path + cleaned_title + ".md", "w",
                   encoding="utf-8") as f:
-            f.write(cleaned_text)
+            f.write(soup.get_text())
         logging.info("Wrote text to file for: %s", page_url)
 
