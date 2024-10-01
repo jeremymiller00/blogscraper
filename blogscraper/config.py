@@ -12,10 +12,10 @@ Available Commands:
 
 # authors to follow
 BLOGS = {
-    "John Cutler": {
-        "base_url": "https://cutlefish.substack.com/archive",
-        "bot": "SubstackBot"
-    },
+    # "John Cutler": {
+    #     "base_url": "https://cutlefish.substack.com/archive",
+    #     "bot": "SubstackBot"
+    # },
     "Katie Bauer": {
         "base_url": "https://wrongbutuseful.substack.com/archive",
         "bot": "SubstackBot"
